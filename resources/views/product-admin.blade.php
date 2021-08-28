@@ -1,119 +1,103 @@
+<?php
+use App\Models\CategoryModel;
+use App\Models\ProductModel;
+?>
 <head>
-<script src="//cdn.ckeditor.com/4.14.1/standard/ckeditor.js"></script>
-<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 
+<!-- jQuery library -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
-<head>
-    <title>Laravel 8|7 Drag And Drop File/Image Upload Examle </title>
+<!-- Popper JS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
 
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.7.2/dropzone.min.css" rel="stylesheet">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.7.2/min/dropzone.min.js"></script>
-
-    <script>
-        var dropzone = new Dropzone('#file-upload', {
-            previewTemplate: document.querySelector('#preview-template').innerHTML,
-            parallelUploads: 3,
-            thumbnailHeight: 150,
-            thumbnailWidth: 150,
-            maxFilesize: 5,
-            filesizeBase: 1500,
-            thumbnail: function (file, dataUrl) {
-                if (file.previewElement) {
-                    file.previewElement.classList.remove("dz-file-preview");
-                    var images = file.previewElement.querySelectorAll("[data-dz-thumbnail]");
-                    for (var i = 0; i < images.length; i++) {
-                        var thumbnailElement = images[i];
-                        thumbnailElement.alt = file.name;
-                        thumbnailElement.src = dataUrl;
-                    }
-                    setTimeout(function () {
-                        file.previewElement.classList.add("dz-image-preview");
-                    }, 1);
-                }
-            }
-        });
-        
-        var minSteps = 6,
-            maxSteps = 60,
-            timeBetweenSteps = 100,
-            bytesPerStep = 100000;
-
-        dropzone.uploadFiles = function (files) {
-            var self = this;
-
-            for (var i = 0; i < files.length; i++) {
-
-                var file = files[i];
-                totalSteps = Math.round(Math.min(maxSteps, Math.max(minSteps, file.size / bytesPerStep)));
-
-                for (var step = 0; step < totalSteps; step++) {
-                    var duration = timeBetweenSteps * (step + 1);
-                    setTimeout(function (file, totalSteps, step) {
-                        return function () {
-                            file.upload = {
-                                progress: 100 * (step + 1) / totalSteps,
-                                total: file.size,
-                                bytesSent: (step + 1) * file.size / totalSteps
-                            };
-
-                            self.emit('uploadprogress', file, file.upload.progress, file.upload
-                                .bytesSent);
-                            if (file.upload.progress == 100) {
-                                file.status = Dropzone.SUCCESS;
-                                self.emit("success", file, 'success', null);
-                                self.emit("complete", file);
-                                self.processQueue();
-                            }
-                        };
-                    }(file, totalSteps, step), duration);
-                }
-            }
-        }
-
-    </script>
-
-    <style>
-        .dropzone {
-            background: #e3e6ff;
-            border-radius: 13px;
-            max-width: 550px;
-            margin-left: auto;
-            margin-right: auto;
-            border: 2px dotted #1833FF;
-            margin-top: 50px;
-        }
-
-    </style>
+<!-- Latest compiled JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </head>
+
 <body>
-    <div class="container">
-        <div class="row">
-            <div class="col-md-7 offset-3 mt-4">
-                <div class="card-body">
-                    <form method="post" action="" enctype="multipart/form-data">
-                        @csrf
-                        <div class="form-group">
-                            <textarea class="ckeditor form-control" name="wysiwyg-editor"></textarea>
-                        </div>
-                    </form>
-                </div>
-            </div>
+<div class="container">
+  
+
+  <!-- Button to Open the Modal -->
+  <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
+    Add products
+  </button>
+  @if(session('success'))
+  <p class="bg-success text-white">Item saved successfully.</p>
+@endif
+
+
+  <!-- The Modal -->
+  <div class="modal fade" id="myModal">
+    <div class="modal-dialog">
+      <div class="modal-content">
+      
+        <!-- Modal Header -->
+        <div class="modal-header">
+          <h4 class="modal-title">Please enter your product details below:</h4>
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
         </div>
-    </div>
-
-    <div id="dropzone">
-        <form action="{{ route('dropzoneFileUpload') }}" class="dropzone" id="file-upload" enctype="multipart/form-data">
+        
+        <!-- Modal body -->
+        <div class="modal-body">
+        <form method="POST" action="{{url('product-admin')}}" enctype="multipart/form-data">
             @csrf
-            <div class="dz-message">
-                Drag and Drop Single/Multiple Files Here<br>
-            </div>
-        </form>
-    </div>
-</body>
+            <label for="category">Category</label>
+            @php
+                $category=CategoryModel::all();
+            @endphp
+            <select class="form-control" id="product_category">
+                @foreach($category as $categories)
+                <option>{{$categories->category_name}}</option>
+                @endforeach
+            </select>
 
-<script src="//cdn.ckeditor.com/4.14.1/standard/ckeditor.js"></script>
-<script type="text/javascript">
-    $(document).ready(function () {
-        $('.ckeditor').ckeditor();
-    });
-</script>
+            <label for="product_name">Product Name</label>
+            <input type="text" class="form-control" name="product_name" /><br>
+
+            <label for="product_price">Product price</label>
+            <input type="number" class="form-control" name="product_price" /><br>
+
+            <label for="product_description">Product Description</label>
+            <input type="text" class="form-control" name="product_description" /><br>
+
+            <label for="product_image">Product Image</label>
+            <input type="file" class="form-control" name="product_image" />
+            <button type="submit" class="btn btn-primary" name="save">Save</button>
+        </form>
+        </div>
+        
+        <!-- Modal footer -->
+        <div class="modal-footer">
+          <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+        </div>
+        
+      </div>
+    </div>
+  </div>
+  
+</div>
+<table class="table">
+  <thead class="thead-dark">
+    <tr>
+      <th scope="col">Product ID</th>
+      <th scope="col">Product Name</th>
+      <th scope="col">Product Price</th>
+      <th scope="col">product Image</th>
+    </tr>
+  </thead>
+  <tbody>
+  @foreach($product as $products)
+    <tr>
+      <td>{{$products->id}}</td>  
+      <td>{{$products->product_name}}</td>
+      <td>N{{$products->product_price}}</dh>
+      <td><img src="{{asset('/images/a.jpg')}}"  height="50" width="50"/></td>
+      <td><button class="btn btn-primary">Edit</button>&nbsp&nbsp&nbsp&nbsp<button class="btn btn-danger">Delete</button></td>             
+    </tr>
+@endforeach
+  </tbody>
+</table>
+</body>

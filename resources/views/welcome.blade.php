@@ -91,7 +91,7 @@ https://www.tooplate.com/view/2114-pixie
     <!-- Banner Ends Here -->
 
     <!-- Featured Starts Here -->
-    <div class="featured-items">
+    <!-- <div class="featured-items">
       <div class="container">
         <div class="row">
           <div class="col-md-12">
@@ -101,76 +101,21 @@ https://www.tooplate.com/view/2114-pixie
             </div>
           </div>
           <div class="col-md-12">
-            <div class="owl-carousel owl-theme">
-              <a href="{{url('/single_product')}}">
-                <div class="featured-item">
-                  <img src="assets/images/item-01.jpg" alt="Item 1">
-                  <h4>Cloths1</h4>
-                  <h6>N15.00</h6>
-                </div>
+            <div class="owl-carousel owl-theme"> -->
+              @foreach($product as $products)
+              <a href="{{url('single_product/'.$products->id) }}">
+                <!-- <div class="featured-item"> -->
+                <img src="{{url($products->product_image)}}" alt="images here"> 
+                  <h4>{{$products->product_name}}</h4>
+                  <h6>N{{$products->product_price}}</h6>
+                <!-- </div> -->
               </a>
-              <a href="{{url('/single_product')}}">
-                <div class="featured-item">
-                  <img src="assets/images/item-02.jpg" alt="Item 2">
-                  <h4>Cloths2</h4>
-                  <h6>N25.00</h6>
-                </div>
-              </a>
-              <a href="{{url('/single_product')}}">
-                <div class="featured-item">
-                  <img src="assets/images/item-03.jpg" alt="Item 3">
-                  <h4>Cloths3</h4>
-                  <h6>N35.00</h6>
-                </div>
-              </a>
-              <a href="{{url('/single_product')}}">
-                <div class="featured-item">
-                  <img src="assets/images/item-04.jpg" alt="Item 4">
-                  <h4>Cloths1</h4>
-                  <h6>N45.00</h6>
-                </div>
-              </a>
-              <a href="{{url('/single_product')}}">
-                <div class="featured-item">
-                  <img src="assets/images/item-05.jpg" alt="Item 5">
-                  <h4>Cloths4</h4>
-                  <h6>N55.00</h6>
-                </div>
-              </a>
-              <a href="{{url('/single_product')}}">
-                <div class="featured-item">
-                  <img src="assets/images/item-06.jpg" alt="Item 6">
-                  <h4>Cloths5</h4>
-                  <h6>N65.00</h6>
-                </div>
-              </a>
-              <a href="{{url('/single_product')}}">
-                <div class="featured-item">
-                  <img src="assets/images/item-04.jpg" alt="Item 7">
-                  <h4>Cloths6</h4>
-                  <h6>N75.00</h6>
-                </div>
-              </a>
-              <a href="{{url('/single_product')}}">
-                <div class="featured-item">
-                  <img src="assets/images/item-05.jpg" alt="Item 8">
-                  <h4>Cloths7</h4>
-                  <h6>N85.00</h6>
-                </div>
-              </a>
-              <a href="{{url('/single_product')}}">
-                <div class="featured-item">
-                  <img src="assets/images/item-06.jpg" alt="Item 9">
-                  <h4>Cloths8</h4>
-                  <h6>N95.00</h6>
-                </div>
-              </a>
-            </div>
+              @endforeach
+            <!-- </div>
           </div>
         </div>
       </div>
-    </div>
-    <!-- Featred Ends Here -->
+    </div> -->
 
 
     <!-- Subscribe Form Starts Here -->

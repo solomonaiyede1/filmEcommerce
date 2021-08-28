@@ -3,25 +3,65 @@
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\FileUploadController;
+use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\ProductController;
+use App\Http\Controllers\ShowController;
+use App\Http\Controllers\ClientController;
 
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| contains the "web" middleware group. Now create something great!
-|
-*/
+
+
+Route::get('/test', [ShowController::class, 'test']);
+
+
+Route::get('/show', [CategoryController::class, 'show']);
+
+
 
 Route::get('/', function () {
     return view('welcome');
 });
+Route::get('/', [ProductController::class, 'show1']);
+Route::post('/category', [CategoryController::class, 'show']);
 
-Route::get('/single_product', function () {
-    return view('single_product');
+
+Route::get('/single_product/{id}', [ProductController::class, 'display']);
+
+
+Route::get('/addToCart', function(){
+ return view('addToCart');
 });
+
+Route::get('/payment1', function(){
+    return view('payment1');
+   });
+
+   Route::get('/payment2', function(){
+    return view('payment2');
+   });
+
+   Route::get('/payment3', function(){
+    return view('payment3');
+   });
+
+   Route::get('/successful_payment', function(){
+    return view('successful_payment');
+   });
+
+Route::get('cart', [ProductController::class, 'cart'])->name('cart');
+Route::get('/addToCart', [ProductController::class, 'viewCart']);
+Route::get('/addToCart/{id}', [ProductController::class, 'addToCart']);
+Route::patch('update-cart', [ProductController::class, 'update'])->name('update.cart');
+Route::delete('/delete', [ProductController::class, 'remove']);
+Route::get('/client_data', [ClientController::class, 'clientView']);
+Route::post('/client_data', [ClientController::class, 'client']);
+// Route::get('addcart/{id}', [ProductController::class, 'addCart'])->name('add.to.cart');
+// Route::patch('update-cart', [ProductController::class, 'update'])->name('update.cart');
+// Route::delete('remove-from-cart', [ProductController::class, 'remove'])->name('remove.from.cart');
+
+Route::get('/payment', function(){
+    return view('payment');
+   });
+   
 
 Route::get('/about', function () {
     return view('about');
@@ -43,6 +83,10 @@ Route::middleware(['auth:sanctum', 'verified'])->get('/product-admin', function 
     return view('product-admin');
 })->name('product-admin');
 
+Route::get('/product-admin', [ProductController::class, 'show']);
+Route::post('/product-admin', [ProductController::class, 'insert']);
+
+
 Route::middleware(['auth:sanctum', 'verified'])->get('/order', function () {
     return view('order');
 })->name('order');
@@ -55,6 +99,5 @@ Route::middleware(['auth:sanctum', 'verified'])->get('/miscellaneous', function 
     return view('miscellaneous');
 })->name('miscellaneous');
 
+Route::get('/category', [CategoryController::class, 'show1']);
 
-Route::get('upload-ui', [FileUploadController::class, 'dropzoneUi' ]);
-Route::post('file-upload', [FileUploadController::class, 'dropzoneFileUpload' ])->name('dropzoneFileUpload');
