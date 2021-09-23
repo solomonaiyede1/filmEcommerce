@@ -15,6 +15,9 @@ class ProductMigration extends Migration
     {
         Schema::create('product', function (Blueprint $table) {
             $table->id();
+            $table->integer('category_id')->unsigned();
+            $table->foreign('category_id')->references('id')->on('category')->onDelete('cascade');
+            $table->string('product_category');
             $table->string('product_name');
             $table->string('product_price');
             $table->string('product_description');

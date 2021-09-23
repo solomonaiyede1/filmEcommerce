@@ -8,8 +8,12 @@
     <meta name="description" content="">
     <meta name="author" content="">
     <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700" rel="stylesheet">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
-    <title>Marketmasta</title>
+    <title>Photfilms</title>
 
     <!-- Bootstrap core CSS -->
     <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -19,103 +23,65 @@
     <link rel="stylesheet" href="assets/css/fontawesome.css">
     <link rel="stylesheet" href="assets/css/tooplate-main.css">
     <link rel="stylesheet" href="assets/css/owl.css">
-<!--
-Tooplate 2114 Pixie
-https://www.tooplate.com/view/2114-pixie
--->
   </head>
 
   <body>
-    
-    <!-- Pre Header -->
-    <div id="pre-header">
+
+<nav class="navbar navbar-expand-sm bg-dark">
+<h2 style="color: blue">Photfilm</h2>
+  <ul class="navbar-nav ml-auto">
+    <li class="nav-item">
+      
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="{{url('/')}}">Home |</a>
+    </li>
+    @if(Auth::guest())
+    <li class="nav-item">
+      <a class="nav-link" href="{{url('/login')}}">Login |</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="{{url('/register')}}">Sign up |</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="{{url('/addTocart')}}">View cart</a>
+    </li>
+    @else
+    <li class="nav-item">
+      <a class="nav-link" href="{{url('/dashboard')}}">Dashboard |</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="#" style="color: red">Welcome <i>{{Auth::user()->name}}</i></a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="{{url('/addTocart')}}">| View cart</a>
+    </li>
+    @endif
+  </ul>
+</nav>
+  <!--Film product display  -->
+  <div class="featured-items">
       <div class="container">
         <div class="row">
           <div class="col-md-12">
-            <span>Shop best and shop well with marketmasta.&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
-                <i><a href="{{url('/login')}}" style="color: white">Login</a> |
-                <a href="{{url('/register')}}" style="color: white">Register</a></i>
-            </span>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Navigation -->
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark static-top">
-      <div class="container">
-        <a class="navbar-brand" href="#"  style="color: blue">Marketmasta</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarResponsive">
-          <ul class="navbar-nav ml-auto">
-            <li class="nav-item active">
-              <a class="nav-link" href="{{url('/')}}">Home
-                <span class="sr-only">(current)</span>
-              </a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="{{url('/product')}}">Products</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="{{url('/about')}}">About Us</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="{{url('/contact')}}">Contact Us</a>
-            </li>
-          </ul>
-        </div>
-      </div>
-    </nav>
-
-    <!-- Page Content -->
-    <!-- Banner Starts Here -->
-    <div class="banner">
-      <div class="container">
-        <div class="row">
-          <div class="col-md-12">
-            <div class="caption">
-              <h2>Marketmasta malls</h2>
-              <div class="line-dec"></div>
-              <p>Visit our malls. Look for everything and anything here <strong>right now</strong> i. You can use this Bootstrap v4.1.3 layout for any CMS. 
-              <br><br>Please tell your friends about <a rel="nofollow" href="https://www.facebook.com/tooplate/">Marketmasta</a> We are innovative, creative and service-oriented <a rel="nofollow" href="https://www.pexels.com">Pexels website</a>.</p>
-              <div class="main-button">
-                <a href="#">Order Now!</a>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <!-- Banner Ends Here -->
-
-    <!-- Featured Starts Here -->
-    <!-- <div class="featured-items">
-      <div class="container">
-        <div class="row">
-          <div class="col-md-12">
-            <div class="section-heading">
-              <div class="line-dec"></div>
-              <h1>Featured Items</h1>
-            </div>
-          </div>
-          <div class="col-md-12">
-            <div class="owl-carousel owl-theme"> -->
-              @foreach($product as $products)
-              <a href="{{url('single_product/'.$products->id) }}">
-                <!-- <div class="featured-item"> -->
-                <img src="{{url($products->product_image)}}" alt="images here"> 
-                  <h4>{{$products->product_name}}</h4>
-                  <h6>N{{$products->product_price}}</h6>
-                <!-- </div> -->
+            <div class="owl-carousel owl-theme">
+            @foreach($product as $products)
+            <a href="{{url('single_product/'.$products->id) }}">
+                <div class="featured-item">
+                  <img src="{{url($products->product_image)}}" height="200"  width="200" alt="images here">
+                  <center>
+                  <h4><b>Film Genres</b>:{{$products->product_category}}</h4>
+                  <h4><b>Film Title</b>:{{$products->product_name}}</h4>
+                  <h6><b>Film Cost</b>:N{{$products->product_price}}.00</h6>
+                  </center>
+                </div>
               </a>
               @endforeach
-            <!-- </div>
+            </div>
           </div>
         </div>
       </div>
-    </div> -->
+    </div>
 
 
     <!-- Subscribe Form Starts Here -->
@@ -125,7 +91,7 @@ https://www.tooplate.com/view/2114-pixie
           <div class="col-md-12">
             <div class="section-heading">
               <div class="line-dec"></div>
-              <h1>Subscribe on Marketmasta now!</h1>
+              <h1>Subscribe on Photofilm now!</h1>
             </div>
           </div>
           <div class="col-md-8 offset-md-2">
@@ -165,18 +131,7 @@ https://www.tooplate.com/view/2114-pixie
         <div class="row">
           <div class="col-md-12">
             <div class="logo">
-              Marketmasta
-            </div>
-          </div>
-          <div class="col-md-12">
-            <div class="footer-menu">
-              <ul>
-                <li><a href="#">Home</a></li>
-                <li><a href="#">Help</a></li>
-                <li><a href="#">Privacy Policy</a></li>
-                <li><a href="#">How It Works ?</a></li>
-                <li><a href="#">Contact Us</a></li>
-              </ul>
+              Photofilms
             </div>
           </div>
           <div class="col-md-12">
@@ -201,9 +156,8 @@ https://www.tooplate.com/view/2114-pixie
         <div class="row">
           <div class="col-md-12">
             <div class="copyright-text">
-              <p>Copyright &copy; Marketmasta 
+              <p>Copyright &copy; Photofilm 
                 
-                - Design: <a rel="nofollow" href="https://www.facebook.com/tooplate">Marketmasta</a></p>
             </div>
           </div>
         </div>

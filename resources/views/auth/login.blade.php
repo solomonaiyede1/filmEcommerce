@@ -1,7 +1,8 @@
 <x-guest-layout>
     <x-jet-authentication-card>
         <x-slot name="logo">
-            <x-jet-authentication-card-logo />
+            <h2 style="color: blue">Photfilm Login page</h2>
+            <!-- <x-jet-authentication-card-logo /> -->
         </x-slot>
 
         <x-jet-validation-errors class="mb-4" />
@@ -11,7 +12,7 @@
                 {{ session('status') }}
             </div>
         @endif
-
+            <font color="red">* Please, login below to make purchase</font>
         <form method="POST" action="{{ route('login') }}">
             @csrf
 

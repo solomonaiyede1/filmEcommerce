@@ -7,9 +7,6 @@ use App\Models\ClientModel;
 
 class ClientController extends Controller
 {
-    public function clientView(Request $request){
-        return view('client_data');
-    }
 
     public function client(Request $request){
         $data=new ClientModel;

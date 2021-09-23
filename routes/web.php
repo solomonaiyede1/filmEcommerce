@@ -9,8 +9,11 @@ use App\Http\Controllers\ShowController;
 use App\Http\Controllers\ClientController;
 
 
-
-Route::get('/test', [ShowController::class, 'test']);
+// Route::get('/test', [ShowController::class, 'test']);
+// Route::post('/test', [ShowController::class, 'insert']);
+// Route::get('/edit', [ShowController::class, 'edit']);
+// Route::get('/edit/{id}', [ShowController::class, 'edit']);
+// Route::post('/edit/{id}', [ShowController::class, 'update']);
 
 
 Route::get('/show', [CategoryController::class, 'show']);
@@ -25,54 +28,38 @@ Route::post('/category', [CategoryController::class, 'show']);
 
 
 Route::get('/single_product/{id}', [ProductController::class, 'display']);
+Route::get('/single_product', function(){
+    return view('/single_product');
+});
 
 
-Route::get('/addToCart', function(){
+Route::post('/addToCart/{id}', [ProductController::class, 'addToCart']);
+Route::get('/addToCart/{id}', function(){
  return view('addToCart');
 });
 
-Route::get('/payment1', function(){
-    return view('payment1');
-   });
-
-   Route::get('/payment2', function(){
-    return view('payment2');
-   });
-
-   Route::get('/payment3', function(){
-    return view('payment3');
-   });
 
    Route::get('/successful_payment', function(){
     return view('successful_payment');
    });
 
+
+
 Route::get('cart', [ProductController::class, 'cart'])->name('cart');
-Route::get('/addToCart', [ProductController::class, 'viewCart']);
-Route::get('/addToCart/{id}', [ProductController::class, 'addToCart']);
+// Route::get('/addToCart', [ProductController::class, 'viewCart']);
+// Route::get('/addToCart/{id}', [ProductController::class, 'addToCart']);
 Route::patch('update-cart', [ProductController::class, 'update'])->name('update.cart');
-Route::delete('/delete', [ProductController::class, 'remove']);
-Route::get('/client_data', [ClientController::class, 'clientView']);
-Route::post('/client_data', [ClientController::class, 'client']);
+
+Route::get('/product-admin-delete/{id}', [ProductController::class, 'deleteView']);
+Route::delete('/product-admin/{id}', [ProductController::class, 'deleteProduct']);
+Route::get('/payment1', [ProductController::class, 'payment'])->middleware('shoppingcart');
 // Route::get('addcart/{id}', [ProductController::class, 'addCart'])->name('add.to.cart');
 // Route::patch('update-cart', [ProductController::class, 'update'])->name('update.cart');
-// Route::delete('remove-from-cart', [ProductController::class, 'remove'])->name('remove.from.cart');
+Route::delete('/addToCart/{id}', [ProductController::class, 'remove']);
 
-Route::get('/payment', function(){
-    return view('payment');
-   });
-   
 
-Route::get('/about', function () {
-    return view('about');
-});
-
-Route::get('/product', function () {
-    return view('product');
-});
-
-Route::get('/contact', function () {
-    return view('contact');
+Route::get('/order', function () {
+    return view('order');
 });
 
 Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
@@ -85,19 +72,16 @@ Route::middleware(['auth:sanctum', 'verified'])->get('/product-admin', function 
 
 Route::get('/product-admin', [ProductController::class, 'show']);
 Route::post('/product-admin', [ProductController::class, 'insert']);
-
-
-Route::middleware(['auth:sanctum', 'verified'])->get('/order', function () {
-    return view('order');
-})->name('order');
+Route::get('/product-edit', [ShowController::class, 'edit1']);
+Route::get('/product-edit/{id}', [ProductController::class, 'show2']);
+Route::post('/product-edit/{id}', [ProductController::class, 'update1']);
+Route::get('/product-search', [ProductController::class, 'search']);
+Route::post('/product-search', [ProductController::class, 'search1']);
 
 Route::middleware(['auth:sanctum', 'verified'])->get('/category', function () {
     return view('category');
 })->name('category');
 
-Route::middleware(['auth:sanctum', 'verified'])->get('/miscellaneous', function () {
-    return view('miscellaneous');
-})->name('miscellaneous');
 
 Route::get('/category', [CategoryController::class, 'show1']);
 

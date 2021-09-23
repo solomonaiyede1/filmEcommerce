@@ -10,7 +10,11 @@ class ProductModel extends Model
     use HasFactory;
     protected $table='product';
     protected $fillable = [
-        'product_name', 'product_price', 'product_description', 'product_image'
+        'category_id', 'product_category', 'product_name', 'product_price', 'product_description', 'product_image'
     ];
+
+    public function productCategory(){
+     $this->belongsTo('App\Models\CategoryModel');  
+    }
 
 }

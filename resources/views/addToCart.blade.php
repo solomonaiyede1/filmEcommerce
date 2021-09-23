@@ -1,61 +1,86 @@
 <?php
-use App\Http\Controllers\ClientController
+  use App\Models\ProductModel;
 ?>
-@if(session('success'))
-        <div class="alert alert-success">
-          {{ session('success') }}
-        </div> 
-    @endif
 
-    <!DOCTYPE html>
-<html lang="en">
-<head>
-  <title>Marketmasta-shopping cart</title>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-</head>
-<body>
+<table class="table-bordered" style="width: 100%;">
+<thead class="thead-dark" style="background-color: blue; color: white; height: 50px;">
+<tr>
+<th><center><b>Film Name</b></center></th>
+<th><center><b></b>Film Price(N)</b></center></th>
+<th><center><b></b>Film Quantity</b></center></th>
+<th><center><b></b>Total price(N)</b></center></th>
+</tr>
+</thead>
+@php
+$product=ProductModel::all();
+@endphp
 
-  <!-- Button to Open the Modal -->
+<?php
+$total=0;
+?>
+@foreach(session()->get('cart') as $cart)
+<tr border="1">
+<td><center>{{$cart['name']}}</center></td>
+<td><center>{{$cart['price']}}</center></td>
+<td><center>{{$cart['quantity']}}</center></td>
+<?php $total1= $cart['price']*$cart['quantity'];?>
+<td><center><?php echo number_format($total1); ?></center></td>
+<?php
+    $total=$total+ $total1;
+?>
+</tr>
+@endforeach
+</table>
+<?php
+echo $total;
+?>
 
-  @if (session()->has('success'))
-    <script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <!-- <script>
+  var x=@php echo session()->get('total'); @endphp;
+  function payWithPaystack(){
+    var handler = PaystackPop.setup({
+      key: 'pk_test_c9124b21485268af8dd8ad2f9aa0e90b4ea47a25',
+      email: 'customer@email.com',
+      amount: x*100,
+      ref: ''+Math.floor((Math.random() * 1000000000) + 1), // generates a pseudo-unique reference. Please replace with a reference you generated. Or remove the line entirely so our API will generate one for you
+      metadata: {
+         custom_fields: [
+            {
+                display_name: "Mobile Number",
+                variable_name: "mobile_number",
+                value: "+2348012345678"
+            }
+         ]
+      },
+      callback: function(response){
+          alert('success. transaction ref is ' + response.reference);
+
        setTimeout(function() {
-           window.location.href = "YOUR URL"
-       }, 5000); // 2 second
-    </script>
-@endif
+           window.location.href = "/successful_payment"
+       }, 2000); // 2 second
 
- 
-
-<div class="card-body table-responsive">
-                  <table class="table table-hover">
-                     <thead class="text-warning">
-                      <th>Name</th>
-                      <th>Price</th>
-                      <th>Quantity</th>
-                      <th>Delete</th>
-                    </thead>
-                    <tbody>
-                    @foreach(session()->get('cart') as $data)
-                      <tr>
-                          <td>{{$data['name']}}</td>
-                          <td>{{$data['price']}}</td>
-                          <td>{{$data['quantity']}}</td>
-                      </tr>
-                      @endforeach
-                    </tbody>
-                  </table>
-                  @php
-                    $total= $data['price']*$data['quantity'];
-                    $total=session()->get('total', $total);
-                  echo 'total=N'. $total;
-                  @endphp
-                  <br><br>
-                  <a class="btn btn-success" href="{{url('/')}}">Continue Shopping</a>
-                  <a class="btn btn-primary" href="{{url('/client_data')}}">Checkout</a>
-                </div>
-
+      },
+      onClose: function(){
+          alert('window closed');
+      }
+    });
+    handler.openIframe();
+  }
+</script> -->

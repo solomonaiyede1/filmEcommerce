@@ -1,5 +1,3 @@
-@extends('sidebar')
-
-@section('content')
-
-@endsection
+<x-app-layout>
+    @include('sidebar')   
+</x-app-layout>

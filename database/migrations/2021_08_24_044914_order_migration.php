@@ -15,11 +15,11 @@ class OrderMigration extends Migration
     {
         Schema::create('order', function (Blueprint $table) {
             $table->id();
-            $table->string('order_name');
-            $table->string('order_quantity');
-            $table->string('order_image');
-            $table->string('order_amount');
-            $table->string('order_status');
+            $table->integer('user_id')->unsigned();
+            $table->foreign('user_id')->references('id')->on('user')->onDelete('cascade');
+            $table->string('name');
+            $table->string('price');
+            $table->string('quantity');
             $table->timestamps();
         });
     }

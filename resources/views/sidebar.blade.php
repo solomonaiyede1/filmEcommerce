@@ -1,5 +1,14 @@
-@yield('content')
+
+<?php
+use App\Models\CategoryModel;
+use App\Models\ProductModel;
+?>
 <head>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
 <style>
 body {
   margin: 0;
@@ -55,27 +64,40 @@ div.content {
     float: none;
   }
 }
+
+.content1{
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+}
+.good1{
+  margin-right: 2%;
+  float: right;
+}
 </style>
 </head>
-<x-app-layout>
-    <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Dashboard') }}
-        </h2>
-    </x-slot>
-                
-                <div class="sidebar">
-                    <a class="active" href="{{url('/dashboard')}}">Dashboard</a>
-                    <a href="{{url('/product-admin')}}">Product</a>
-                    <a href="{{url('/order')}}">Order</a>
-                    <a href="{{url('/category')}}">Category</a>
-                    <a href="{{url('/miscellaneous')}}">Miscellaneous</a>
-                </div>
 
-                <div class="content">
-                    <h2>Responsive Sidebar Example</h2>
-                    
-                </div>
+<body>
 
-      
-</x-app-layout>
+<div class="content1">
+<!--side bar here -->
+<div class="sidebar">
+@if(Auth::user()->role=='admin')
+      <b><a class="active" href="#" class="btn btn-success" style="font-size: 15px">Photofilm Admin Dashboard</a></b>
+@else
+<b><a class="active" href="#" class="btn btn-success" style="font-size: 15px">Photofilm User Dashboard</a></b>
+@endif
+    <a class="active" href="{{url('/dashboard')}}">Dashboard</a>
+    @if(Auth::user()->role=='admin')
+    <a href="{{url('/product-admin')}}">Film Upload</a>
+    <a href="{{url('/order')}}">Order</a>
+    <a href="{{url('/category')}}">Category</a>
+    @endif
+    <a href="{{url('/category')}}">View Purchase History</a>
+    <a href="{{url('/user/profile')}}">Profile setting</a>
+</div>
+
+</div>
+<!--end sidebar -->
+</div>
+</body>
