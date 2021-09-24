@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use App\Models\user;
+use App\Models\User;
 
 class OrderModel extends Model
 {
@@ -13,7 +13,7 @@ class OrderModel extends Model
     protected $fillable=['user_id','name', 'price', 'quantity'];
 
     public function orderUser(){
-        $this->hasMany(User::class, 'user_id');
+        return $this->belongsTo(User::class, 'user_id', 'id');
     }
 
 

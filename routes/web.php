@@ -34,13 +34,18 @@ Route::get('/single_product', function(){
 
 
 Route::post('/addToCart/{id}', [ProductController::class, 'addToCart']);
+Route::get('/addToCart', function(){
+    return view('addToCart');
+   });
 Route::get('/addToCart/{id}', function(){
  return view('addToCart');
 });
 
+Route::get('/payment1', [ProductController::class, 'payment'])->middleware('shoppingcart');
+Route::post('/payment1', [ProductController::class, 'orderReal']);
 
-   Route::get('/successful_payment', function(){
-    return view('successful_payment');
+Route::get('/success', function(){
+    return view('success');
    });
 
 
@@ -52,7 +57,7 @@ Route::patch('update-cart', [ProductController::class, 'update'])->name('update.
 
 Route::get('/product-admin-delete/{id}', [ProductController::class, 'deleteView']);
 Route::delete('/product-admin/{id}', [ProductController::class, 'deleteProduct']);
-Route::get('/payment1', [ProductController::class, 'payment'])->middleware('shoppingcart');
+// Route::get('/payment1', [ProductController::class, 'payment'])->middleware('shoppingcart');
 // Route::get('addcart/{id}', [ProductController::class, 'addCart'])->name('add.to.cart');
 // Route::patch('update-cart', [ProductController::class, 'update'])->name('update.cart');
 Route::delete('/addToCart/{id}', [ProductController::class, 'remove']);
@@ -77,6 +82,9 @@ Route::get('/product-edit/{id}', [ProductController::class, 'show2']);
 Route::post('/product-edit/{id}', [ProductController::class, 'update1']);
 Route::get('/product-search', [ProductController::class, 'search']);
 Route::post('/product-search', [ProductController::class, 'search1']);
+
+Route::get('/home-search', [ProductController::class, 'show3']);
+Route::post('/home-search', [ProductController::class, 'search3']);
 
 Route::middleware(['auth:sanctum', 'verified'])->get('/category', function () {
     return view('category');

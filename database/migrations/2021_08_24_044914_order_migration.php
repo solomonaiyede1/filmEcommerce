@@ -16,7 +16,7 @@ class OrderMigration extends Migration
         Schema::create('order', function (Blueprint $table) {
             $table->id();
             $table->integer('user_id')->unsigned();
-            $table->foreign('user_id')->references('id')->on('user')->onDelete('cascade');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->string('name');
             $table->string('price');
             $table->string('quantity');

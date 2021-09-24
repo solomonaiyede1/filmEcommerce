@@ -22,7 +22,6 @@ use App\Models\ProductModel;
   <button type="submit" class="btn btn-primary">Search</button>
 </form>
 </nav>
-@include('sidebar')
 
  <!-- Button to Open the Modal -->
   @if(session('success'))

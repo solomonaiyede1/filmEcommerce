@@ -54,10 +54,15 @@
       <a class="nav-link" href="#" style="color: red">Welcome <i>{{Auth::user()->name}}</i></a>
     </li>
     <li class="nav-item">
-      <a class="nav-link" href="{{url('/addTocart')}}">| View cart</a>
+      <a class="nav-link" href="{{url('/addToCart')}}">| View cart</a>
     </li>
     @endif
   </ul>
+  <form method="post" action="/home-search" class="ml-auto">
+  @csrf
+  <input type="text" name="search" placeholder="Search..." required/>
+  <button type="submit" class="btn btn-primary">Search</button>
+</form>
 </nav>
   <!--Film product display  -->
   <div class="featured-items">

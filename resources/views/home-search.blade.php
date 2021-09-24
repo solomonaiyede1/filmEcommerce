@@ -1,40 +1,32 @@
 <!DOCTYPE html>
 <html lang="en">
-
-  <head>
-
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="">
-    <meta name="author" content="">
-    <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700" rel="stylesheet">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+<head>
+  <title>Photofilm</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
-    <title>Marketmasta</title>
-
-    <!-- Bootstrap core CSS -->
-    <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-
-
-    <!-- Additional CSS Files -->
-    <link rel="stylesheet" href="assets/css/fontawesome.css">
-    <link rel="stylesheet" href="assets/css/tooplate-main.css">
-    <link rel="stylesheet" href="assets/css/owl.css">
-
-    <style>
-      .nav-link{
-        color: white;
-      }
-    </style>
-  </head>
-
-  <body>
-
-<nav class="navbar navbar-expand-sm bg-dark">
-<h2 style="color: white">Photfilm</h2>
+  <style>
+    .container{
+      width: 100%;
+      display: flex;
+      flex-wrap: wrap;
+      flex-flow: row wrap;
+      justify-content: space-around;
+    }
+    .card{
+      width: 200px;
+      height: 150px;
+    }
+  </style>
+</head>
+<body>
+ 
+<nav class="navbar navbar-expand-sm bg-light">
+<h2 style="color: blue">Photfilm</h2>
   <ul class="navbar-nav ml-auto">
     <li class="nav-item">
       
@@ -65,3 +57,27 @@
     @endif
   </ul>
 </nav>
+<br><br>
+
+<div class="container">
+  @foreach($product as $products)
+  <a href="{{url('single_product/'.$products->id) }}">
+  <div class="card">
+    <img class="card-img-top" src="{{url($products->product_image)}}" alt="Card image">
+    <div class="card-body">
+    <h6><b>Film Genres</b>:{{$products->product_category}}</h6>
+    <h6><b>Film Genres</b>:{{$products->product_name}}</h6>
+    <h6><b>Film Genres</b>:{{$products->product_price}}</h6>
+    </div>
+  </div>
+  </a>
+  @endforeach
+  <?php 
+  if($product->count()==0){
+       echo "<h4 style='color: red'>Sorry, no search result</h4>";
+   }
+   ?>
+</div>
+
+</body>
+</html>

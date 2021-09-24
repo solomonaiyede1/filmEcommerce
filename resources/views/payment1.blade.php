@@ -1,3 +1,4 @@
+
 <html lang="en">
 <head>
   <title>Photfilm</title>
@@ -12,23 +13,24 @@
 <body>
 
 <div class="alert alert-success"><h3>Photofilm</h3></div>
-
+<a href="{{url('/')}}">Back to shopping cart</a><br>
 <form>
   <script src="https://js.paystack.co/v1/inline.js"></script>
 </form>
 <a href="#" class="btn btn-success">Total Amount to pay</a><br>
-N @php echo session()->get('total'); @endphp
+      <?php 
+      $total= session()->get('total');
+      echo '<h5>N'.$total.'<h5>'; 
+      ?>
 <br>
-<button class="btn btn-primary" onclick="payWithPaystack()">Pay with debit card</button><br>
-
+<button class="btn btn-primary" onclick="payWithPaystack()">Pay with debit card</button>
 
 <script>
-  var x=@php echo session()->get('total'); @endphp;
   function payWithPaystack(){
     var handler = PaystackPop.setup({
       key: 'pk_test_c9124b21485268af8dd8ad2f9aa0e90b4ea47a25',
       email: 'customer@email.com',
-      amount: x*100,
+      amount: {{$total}}*100,
       ref: ''+Math.floor((Math.random() * 1000000000) + 1), // generates a pseudo-unique reference. Please replace with a reference you generated. Or remove the line entirely so our API will generate one for you
       metadata: {
          custom_fields: [

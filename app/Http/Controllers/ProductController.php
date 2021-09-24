@@ -5,6 +5,7 @@ use Illuminate\Http\Request;
 use App\Models\ProductModel;
 use App\Models\ClientModel;
 use App\Models\OrderModel;
+use App\Models\User;
 
 class ProductController extends Controller
 {
@@ -203,10 +204,6 @@ class ProductController extends Controller
         
     }
 
-    public function payment(){
-        return view('/payment1');
-    }
-
     public function deleteProduct($id){
         $product=ProductModel::find($id);
         $product->delete();
@@ -223,4 +220,49 @@ class ProductController extends Controller
         $product=ProductModel::where('product_name', 'like', $input .'%')->get();
         return view('search', ['product'=> $product]);
     }
+
+    public function payment(){
+        return view('/payment1');
+    }
+
+    public function order(){
+        return redirect('/payment1');
+    }
+
+    public function orderReal(Request $request){
+        $order=new OrderModel;
+        // $order1=OrderModel::with('orderUser')->get();
+            $cart=session()->get('cart');
+            foreach($cart as $data){
+                $order=new OrderModel;
+                $order->name=$data['name'];
+                $order->price=$data['price'];
+                $order->quantity=$data['quantity'];
+                $order->user_id=$request->get('user_id');
+                $order->payment_status=$request->get('payment_status');
+                $order->save();
+            }
+            $request->session()->forget('cart');
+            return redirect('/payment1');
+            
+        }
+
+// public function show3(){
+//     $product=ProductModel::all();
+//     return view('search',['product'=>$product]);
+// }
+// public function search2(Request $request){
+//     $input=$request->get('search');
+//     $product=ProductModel::where('product_name', 'like', $input .'%')->get();
+//     return view('search', ['product'=> $product]);
+// }
+
+public function show3(){
+    return view('search');
+}
+public function search3(Request $request){
+    $input=$request->get('search');
+    $product=ProductModel::where('product_name', 'like', $input.'%')->get();
+    return view('home-search', ['product' =>$product]);
+}
 }

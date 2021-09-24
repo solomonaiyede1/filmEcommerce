@@ -93,7 +93,7 @@ div.content {
     <a href="{{url('/order')}}">Order</a>
     <a href="{{url('/category')}}">Category</a>
     @endif
-    <a href="{{url('/category')}}">View Purchase History</a>
+    <a href="#">View Purchase History</a>
     <a href="{{url('/user/profile')}}">Profile setting</a>
 </div>
 

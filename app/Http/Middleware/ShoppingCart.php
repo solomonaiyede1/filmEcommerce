@@ -18,7 +18,7 @@ class ShoppingCart
     public function handle(Request $request, Closure $next)
     {
         if(Auth::check()==false){
-            return redirect('/payment1');
+            return redirect('/login');
         }
 
         return $next($request);

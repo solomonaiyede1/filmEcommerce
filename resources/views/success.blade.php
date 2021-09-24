@@ -1,3 +1,10 @@
+<?php
+if(!isset($_SERVER['HTTP_REFERER'])){
+  die("This is restricted page.You are not allowed here");
+}
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -11,9 +18,15 @@
 <body>
 
 <div class="alert alert-success">
-<h1>Your payment is successful. You will be contacted</h1>
-</div>
+<h4>Your transaction is successful. You will be contacted within 3-5 working days</h4>
 
+<h4>Thanks for transacting with photfilm. Redirecting to home page...</h4>
+</div>
+<script>
+   setTimeout(function() {
+           window.location.href = "/"
+       }, 3000); // 2 second
+</script>
 </body>
 
 </html>
